@@ -1,9 +1,10 @@
-import Header from '../../shared/Header/Header';
+import Header from "../../shared/Header/Header";
+
 
 const Home = () => {
     return (
         <div className='max-w-6xl mx-auto'>
-            <div>
+            <div className="mt-3">
                 <Header></Header>
             </div>
 
