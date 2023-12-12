@@ -1,9 +1,12 @@
+import { Helmet } from "react-helmet";
 
 
 const Blog = () => {
     return (
         <div>
-            <h2>Blog page</h2>
+            <Helmet>
+                <title>Travel Guru | Blog</title>
+            </Helmet>
         </div>
     );
 };

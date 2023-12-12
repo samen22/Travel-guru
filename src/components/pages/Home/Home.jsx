@@ -1,9 +1,12 @@
-
+import Header from '../../shared/Header/Header';
 
 const Home = () => {
     return (
-        <div>
-            <h2>Home page</h2>
+        <div className='max-w-6xl mx-auto'>
+            <div>
+                <Header></Header>
+            </div>
+
         </div>
     );
 };
