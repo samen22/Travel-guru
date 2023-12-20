@@ -30,7 +30,7 @@ const Header = () => {
             </div>
             <div className="form-control">
                 <div className="relative">
-                    <input type="text" placeholder={`Search your Destination...`} className="text-white rounded-md bg-transparent border solid border-rounded border-white w-80 h-10 pl-10" />
+                    <input type="text" placeholder={`Search your Destination...`} className="text-white rounded-md bg-transparent border solid border-rounded border-white w-80 h-10 pl-10 object-cover" />
                 </div>
                 <div className="absolute inset-y-50 mt-2 flex items-center pl-3 pointer-events-none">
                     <IoSearch className="text-white w-5 h-5" />

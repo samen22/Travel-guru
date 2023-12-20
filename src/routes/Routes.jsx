@@ -7,6 +7,7 @@ import Blog from "../components/pages/Blog/Blog";
 import Contact from "../components/pages/Contact/Contact";
 import Login from "../components/Auth/Login/Login";
 import Register from "../components/Auth/Register/Register";
+import CardDetails from "../components/pages/Home/CardDetails";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home></Home>
+            },
+            {
+                path: '/details/:_id',
+                element: <CardDetails></CardDetails>,
             },
             {
                 path: "/news",
