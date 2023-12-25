@@ -1,8 +1,41 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const Register = () => {
+
+    const {createUser} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+
+    const handleRegister = e =>{
+        e.preventDefault();
+        console.log(e.currentTarget);
+        const form = new FormData(e.currentTarget);
+
+        const firstName = form.get('first');
+        const lastName = form.get('last');
+        const email = form.get('email');
+        const password = form.get('password');
+        console.log(firstName, lastName, email, password);
+        
+        // create user
+        createUser(email, password)
+        .then(result =>{
+            alert('You have registered successfully!', result.user);
+            e.target.reset();
+
+            // navigate user to login 
+            navigate('/login');
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+
 
     const navLinks =
         <>
@@ -47,16 +80,16 @@ const Register = () => {
             {/* Register section */}
             <div className="flex justify-center items-center mt-16">
                 <div className="w-1/2 h-1/2 p-14 border border-[#ABABAB] bg-base-100 rounded">
-                    <form className="">
+                    <form onSubmit={handleRegister} className="">
                         <h1 className="text-2xl font-bold text-black font-montserrat mb-12">Create an account</h1>
                         <div className="form-control">
-                            <input type="text" placeholder="First Name" className="input input-bordered mb-6" required />
-                            <input type="text" placeholder="Last Name" className="input input-bordered mb-6" required />
-                            <input type="email" placeholder="Username or Email" className="input input-bordered mb-6" required />
+                            <input type="text" placeholder="First Name" name="first" className="input input-bordered mb-6" required />
+                            <input type="text" placeholder="Last Name" name="last" className="input input-bordered mb-6" required />
+                            <input type="email" placeholder="Username or Email" name="email" className="input input-bordered mb-6" required />
                         </div>
                         <div className="form-control">
-                            <input type="password" placeholder="Password" className="input input-bordered mb-6" required />
-                            <input type="password" placeholder="Confirm Password" className="input input-bordered" required />
+                            <input type="password" placeholder="Password" name="password" className="input input-bordered mb-6" required />
+                            <input type="password" placeholder="Confirm Password" name="confirm" className="input input-bordered" required />
                         </div>
                         <div className="form-control mt-8">
                             <button className="w-full bg-[#F9A51A] p-3 text-black">Create an account</button>

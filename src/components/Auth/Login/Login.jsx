@@ -1,10 +1,39 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 
 
 const Login = () => {
+    const { signIn} = useContext(AuthContext);
+    const location = useLocation();
+    console.log('location in the login page', location)
+    const navigate = useNavigate();
+
+    const handleSignIn = e => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+
+        const email = form.get('email');
+        const password = form.get('password');
+        console.log(email, password);
+
+        signIn(email, password)
+            .then(result => {
+                alert('You are logged in successfully.', result.user);
+                e.target.reset();
+
+                // navigate user to the home page
+                navigate(location?.state ? location.state : '/');
+            })
+            .catch(error =>{
+                console.error(error);
+            })
+    }
+
+
 
     const navLinks =
         <>
@@ -49,13 +78,13 @@ const Login = () => {
             {/* Login section */}
             <div className="flex justify-center items-center mt-16">
                 <div className="w-1/2 h-1/2 p-14 border border-[#ABABAB] bg-base-100 rounded">
-                    <form className="">
+                    <form onSubmit={handleSignIn} className="">
                         <h1 className="text-2xl font-bold text-black font-montserrat mb-12">Login</h1>
                         <div className="form-control mb-12 ">
-                            <input type="email" placeholder="Username or Email" className="input input-bordered" required />
+                            <input type="email" placeholder="Username or Email" name="email" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
-                            <input type="password" placeholder="Password" className="input input-bordered" required />
+                            <input type="password" placeholder="Password" name="password" className="input input-bordered" required />
                             <div className="flex justify-between items-center mt-6">
                                 <div className="flex items-center gap-2">
                                     <input type="checkbox" className="w-4 h-4" />

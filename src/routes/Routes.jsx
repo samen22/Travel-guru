@@ -8,6 +8,7 @@ import Contact from "../components/pages/Contact/Contact";
 import Login from "../components/Auth/Login/Login";
 import Register from "../components/Auth/Register/Register";
 import CardDetails from "../components/pages/Home/CardDetails";
+import PrivateRoute from './PrivateRoute';
 
 
 const router = createBrowserRouter([
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/details/:_id',
-                element: <CardDetails></CardDetails>,
+                element: <PrivateRoute><CardDetails></CardDetails></PrivateRoute>
             },
             {
                 path: "/news",

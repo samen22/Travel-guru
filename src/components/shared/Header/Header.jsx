@@ -1,9 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 
 
 const Header = () => {
+    const {logOut, user} = useContext(AuthContext);
+
+    const handleLogOut = () =>{
+        logOut()
+        .then(() =>{
+            alert('You have logged out successfully');
+        })
+        .catch(error =>{
+            console.error(error);
+        })
+    }
 
     const navLinks =
         <>
@@ -44,7 +57,13 @@ const Header = () => {
             </ul>
         </div>
         <div className="navbar-center">
-            <Link to={'/login'}><a className=" bg-[#dd8e10] text-[#000000] pr-7 pl-7 pt-3 pb-3 rounded-md font-medium">Login</a></Link>
+            {
+                user ? 
+
+                <Link to={'/login'}><a onClick={handleLogOut} className=" bg-[#dd8e10] text-[#000000] pr-7 pl-7 pt-3 pb-3 rounded-md font-medium">Logout</a></Link>
+                :
+                <Link to={'/login'}><a className=" bg-[#dd8e10] text-[#000000] pr-7 pl-7 pt-3 pb-3 rounded-md font-medium">Login</a></Link>
+            }
         </div>
     </div>
 );
