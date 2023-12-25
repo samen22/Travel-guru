@@ -2,35 +2,50 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { useContext } from "react";
-import { AuthContext } from "../../../providers/AuthProvider";
+import { AuthContext, provider } from "../../../providers/AuthProvider";
+import { auth } from "../../../firebase/firebase.config";
 
 
 
 const Login = () => {
-    const { signIn} = useContext(AuthContext);
+    const {signIn, signInWithGoogle, user} = useContext(AuthContext);
     const location = useLocation();
-    console.log('location in the login page', location)
     const navigate = useNavigate();
 
-    const handleSignIn = e => {
+
+    const handleSignIn = e =>{
         e.preventDefault();
         const form = new FormData(e.currentTarget);
-
         const email = form.get('email');
         const password = form.get('password');
         console.log(email, password);
 
-        signIn(email, password)
-            .then(result => {
-                alert('You are logged in successfully.', result.user);
-                e.target.reset();
+        // navigate user to the home page
+        navigate(location?.state ? location.state : '/');
 
-                // navigate user to the home page
-                navigate(location?.state ? location.state : '/');
-            })
-            .catch(error =>{
-                console.error(error);
-            })
+        // sign in with mail and password
+        signIn(email, password)
+        .then(result =>{
+            alert('You have logged in successfully.', result);
+            
+        })
+        .catch(error =>{
+            console.error(error);
+        })
+    };
+
+
+    const handleGoogle = () =>{
+        signInWithGoogle(auth, provider)
+        .then(result => {
+            alert('You have logged in successfully.');
+            console.log(result);
+        })
+        .catch(error =>{
+            console.error(error);
+        })
+
+        navigate(user ? '/' : alert('You are not registered!'));
     }
 
 
@@ -112,7 +127,7 @@ const Login = () => {
                     <FaFacebook className="text-[#3076FF] w-9 h-9 absolute bottom-2 left-2"></FaFacebook>
                 </div>
                 <div className="relative">
-                    <button className="border text-black border-[#C7C7C7] w-[360px] h-[50px] rounded-full">Continue with Google</button>
+                    <button onClick={handleGoogle} className="border text-black border-[#C7C7C7] w-[360px] h-[50px] rounded-full">Continue with Google</button>
                     <FaGoogle className="w-9 h-9 absolute bottom-2 left-2"></FaGoogle>
                 </div>
             </div>

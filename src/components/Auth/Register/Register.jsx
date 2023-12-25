@@ -9,30 +9,25 @@ const Register = () => {
     const {createUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
-
     const handleRegister = e =>{
         e.preventDefault();
-        console.log(e.currentTarget);
         const form = new FormData(e.currentTarget);
-
         const firstName = form.get('first');
         const lastName = form.get('last');
         const email = form.get('email');
         const password = form.get('password');
         console.log(firstName, lastName, email, password);
-        
-        // create user
+
+        // navigate to login
+        navigate('/login');
+
         createUser(email, password)
         .then(result =>{
             alert('You have registered successfully!', result.user);
-            e.target.reset();
-
-            // navigate user to login 
-            navigate('/login');
         })
-        .catch(error => {
+        .catch(error =>{
             console.error(error);
-        });
+        })
     }
 
 
